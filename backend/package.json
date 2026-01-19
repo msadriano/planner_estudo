@@ -4,7 +4,9 @@
   "private": true,
   "main": "src/server.ts",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts",
+    "build": "tsup src/server.ts",
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "@prisma/client": "^6.19.2",
