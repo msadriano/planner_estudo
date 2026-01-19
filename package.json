@@ -1,0 +1,20 @@
+{
+  "name": "plannerapp-monorepo",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:back": "npm run dev -w backend",
+    "dev:front": "npm run dev -w frontend",
+    "db:studio": "dotenv -e .env -- npm exec -w backend -- prisma studio",
+    "db:generate": "npm exec -w backend -- prisma generate",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "dotenv-cli": "^11.0.0",
+    "prettier": "3.8.0"
+  }
+}

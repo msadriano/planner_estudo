@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TaskStatus {
+   PENDING
+   IN_PROGRESS
+   DONE
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum UserStatus {
+  ENABLED
+  DISABLED
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  age Int?
+  phone String?
+  password String?
+  status UserStatus @default(DISABLED)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt      @map("updated_at")
+
+  planners Planner[] 
+  tasks Task[]
+}
+
+model Planner {
+  id String @id @default(uuid())
+  name String
+  description String?
+  userId String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt      @map("updated_at")
+
+  user     User     @relation(fields: [userId], references: [id])
+  subjects Subject[]
+  tasks Task[]
+}
+
+model Subject {
+  id String @id @default(uuid())
+  name String
+  description String?
+  plannerId String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt      @map("updated_at")
+
+  planner Planner @relation(fields: [plannerId], references:[id])
+  topics Topic[]
+  tasks Task[]
+}
+
+model Topic {
+  id String @id @default(uuid())
+  name String
+  description String?
+  subjectId String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt      @map("updated_at")
+
+  subject Subject @relation(fields: [subjectId], references:[id])
+  tasks Task[]
+}
+
+model Task {
+  id String @id @default(uuid())
+  name String
+  description String?
+  status TaskStatus @default(PENDING)
+  priority Priority? @default(LOW)
+  dueDate DateTime?
+  userId String
+  plannerId String
+  subjectId String?
+  topicId String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt      @map("updated_at")
+
+  user User @relation(fields:[userId], references: [id])
+  planner Planner @relation(fields:[plannerId], references: [id])
+  subject Subject? @relation(fields:[subjectId], references: [id])
+  topic Topic? @relation(fields:[topicId], references: [id])
+}
