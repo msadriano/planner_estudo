@@ -15,10 +15,12 @@ function ErrorHandler(
   }
 
   if (error instanceof ZodError) {
+    const errorMessages = error.flatten().fieldErrors;
+
     return response.status(400).json({
-      status: error,
-      message: 'Erro de Validação',
-      issues: error.format(),
+      status: 'Error',
+      message: 'Dados de entrada inválidos',
+      issues: errorMessages,
     });
   }
 
