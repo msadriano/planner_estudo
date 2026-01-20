@@ -7,7 +7,7 @@ export function generateToken(userId: string) {
   return sign({}, env.JWT_SECRET, { subject: userId, expiresIn });
 }
 
-export function compareToken(token: string) {
+export function verifyToken(token: string) {
     try {
         return verify(token, env.JWT_SECRET)
     } catch {

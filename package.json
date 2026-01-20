@@ -6,10 +6,11 @@
     "frontend"
   ],
   "scripts": {
-    "dev:back": "npm run dev -w backend",
+    "dev:back": "dotenv -e .env -- npm run dev -w backend",
     "dev:front": "npm run dev -w frontend",
     "db:studio": "dotenv -e .env -- npm exec -w backend -- prisma studio",
     "db:generate": "npm exec -w backend -- prisma generate",
+    "db:migrate": "dotenv -e .env -- npm exec -w backend -- prisma migrate dev",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
