@@ -7,7 +7,7 @@ import { compareHash } from '@/shared/utils/hash-password';
 class SessionService {
   static async createSession(userLogin: SessionCreateSchema) {
     const { email, password } = userLogin;
-
+    
     const user = await prisma.user.findFirst({ where: { email } });
 
     if (!user || !user.password) {

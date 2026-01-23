@@ -1,7 +1,7 @@
 import {
   userCreateSchema,
   userIdSchema,
-  userUpdatePasswordSchema,
+  userUpdatePasswordBodySchema,
   userUpdateSchema,
 } from './user-schema';
 import { Request, Response } from 'express';
@@ -26,10 +26,10 @@ class UserController {
   }
 
   async updatePassword(request: Request, response: Response) {
-    const { password } = userUpdatePasswordSchema.parse(request.body);
-    const { id } = userIdSchema.parse(request.params);
-
-    await UserService.updateUserPassword(password, id);
+    const body = userUpdatePasswordBodySchema.parse(request.body);
+    const header = request.headers.authorization as string
+    
+    await UserService.updateUserPassword(body, header);
 
     return response.status(204).send();
   }

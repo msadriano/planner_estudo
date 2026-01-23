@@ -28,10 +28,8 @@ const userUpdateSchema = z.object({
   phone: z.string().min(10, 'Digite um telefone válido').optional(),
 });
 
-const userUpdatePasswordSchema = z.object({
-  password: z
-    .string()
-    .min(6, 'A senha precisa ter no mínimo 6 caracteres'),
+const userUpdatePasswordBodySchema = z.object({
+  password: z.string().min(6, 'A senha precisa ter no mínimo 6 caracteres'),
 });
 
 const userIdSchema = z.object({
@@ -42,10 +40,12 @@ export {
   userCreateSchema,
   userUpdateSchema,
   userIdSchema,
-  userUpdatePasswordSchema,
+  userUpdatePasswordBodySchema,
 };
 
 export type UserCreateSchema = z.infer<typeof userCreateSchema>;
 export type UserUpdateSchema = z.infer<typeof userUpdateSchema>;
 export type UserIdScheme = z.infer<typeof userIdSchema>;
-export type UserUpdatePasswordSchema = z.infer<typeof userUpdatePasswordSchema>;
+export type UserUpdatePasswordBodySchema = z.infer<
+  typeof userUpdatePasswordBodySchema
+>;

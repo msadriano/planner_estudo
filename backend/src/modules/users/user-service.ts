@@ -1,13 +1,13 @@
 import { AppError } from '@/shared/utils/app-error';
 import {
   UserCreateSchema,
-  UserIdScheme,
-  UserUpdatePasswordSchema,
+  UserUpdatePasswordBodySchema,
   UserUpdateSchema,
 } from './user-schema';
 import { prisma } from '@/shared/database/prisma';
 import { Prisma } from '@prisma/client';
-import { generateHash, compareHash } from '@/shared/utils/hash-password';
+import { generateHash } from '@/shared/utils/hash-password';
+import { verifyToken } from '@/shared/utils/auth';
 
 class UserService {
   static async createUser(dataUser: UserCreateSchema) {
@@ -65,7 +65,22 @@ class UserService {
     return userWithoutPassword;
   }
 
-  static async updateUserPassword(newPassword: string, id: string) {
+  static async updateUserPassword(
+    body: UserUpdatePasswordBodySchema,
+    header: string,
+  ) {
+    const { password: newPassword } = body;
+
+    const [, token] = header.split(' ');
+
+    const decoded = verifyToken(token);
+
+    if (!decoded || typeof decoded === 'string' || !decoded.sub) {
+      throw new AppError('Token inválido ou expirado', 401);
+    }
+
+    const { sub: id } = decoded;
+
     const userFound = await prisma.user.findUnique({ where: { id } });
 
     if (!userFound) {

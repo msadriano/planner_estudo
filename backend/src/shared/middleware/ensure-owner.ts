@@ -1,10 +1,17 @@
 import { Response, Request, NextFunction } from 'express';
 import { prisma } from '../database/prisma';
 import { AppError } from '../utils/app-error';
+import { verifyToken } from '../utils/auth';
 
 export const ensureOwner = (model: keyof typeof prisma) => {
   return async (request: Request, response: Response, next: NextFunction) => {
-    const { id } = request.params;
+    const [, token] = request.headers.authorization?.split(' ');
+
+    const decoded = verifyToken(token);
+    //const id = decoded?.type === 'recovery' ? decoded.sub : request.params.id;
+
+    const id = decoded?.sub;
+
     const authenticatedUserId = request.user.id;
 
     const includeConfig: any = {
