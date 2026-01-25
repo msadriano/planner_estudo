@@ -1,4 +1,5 @@
 import {
+  userAvatarUpdateUrlSchema,
   userCreateSchema,
   userIdSchema,
   userUpdatePasswordBodySchema,
@@ -27,8 +28,8 @@ class UserController {
 
   async updatePassword(request: Request, response: Response) {
     const body = userUpdatePasswordBodySchema.parse(request.body);
-    const header = request.headers.authorization as string
-    
+    const header = request.headers.authorization as string;
+
     await UserService.updateUserPassword(body, header);
 
     return response.status(204).send();
@@ -40,6 +41,25 @@ class UserController {
     await UserService.deleteAccount(id);
 
     return response.status(204).send();
+  }
+
+  async show(request: Request, response: Response) {
+    const userId = request.user.id;
+
+    const user = await UserService.showUser(userId);
+
+    console.log(user);
+
+    return response.status(200).json(user);
+  }
+
+  async updateMe(request: Request, response: Response) {
+    const { avatar_url } = userAvatarUpdateUrlSchema.parse(request.body);
+    const userId = request.user.id;
+
+    const updatedUser = await UserService.updateUser({ avatar_url }, userId);
+
+    return response.status(200).json(updatedUser);
   }
 }
 

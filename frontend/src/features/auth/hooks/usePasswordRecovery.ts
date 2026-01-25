@@ -37,7 +37,7 @@ export function usePasswordRecovery() {
     try {
       await recoveryPromise;
       setTimeout(() => {
-        navigate('/auth/signin');
+        navigate('/signin');
       }, 3000);
     } catch (error) {
       setTimeout(() => {

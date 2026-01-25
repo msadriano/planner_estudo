@@ -35,7 +35,10 @@ class UserService {
     return userWithoutPassword;
   }
 
-  static async updateUser(dataUpdateUser: UserUpdateSchema, id: string) {
+  static async updateUser(
+    dataUpdateUser: Partial<UserUpdateSchema>,
+    id: string,
+  ) {
     const user = await prisma.user.findFirst({ where: { id } });
 
     if (!user) {
@@ -105,6 +108,18 @@ class UserService {
       where: { id },
       data: { deletedAt: new Date() },
     });
+  }
+
+  static async showUser(userId: string) {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+
+    if (!user) {
+      throw new AppError('Usuário não encontrado', 404);
+    }
+
+    const { password, ...userWithoutPassword } = user;
+
+    return userWithoutPassword;
   }
 }
 

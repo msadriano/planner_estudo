@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import { LightModeOutlined, DarkModeOutlined } from '@mui/icons-material';
 
 interface ThemeSwitcherProps {
   legend: string;
+  value: 'light' | 'dark';
+  onChange: (theme: 'light' | 'dark') => void;
 }
 
-export function ThemeSwitcher({ legend }: ThemeSwitcherProps) {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-
+export function ThemeSwitcher({ legend, value, onChange }: ThemeSwitcherProps) {
   return (
     <div className="flex flex-col items-start justify-center gap-1 w-full">
       {legend && (
@@ -16,14 +15,14 @@ export function ThemeSwitcher({ legend }: ThemeSwitcherProps) {
       <div className="bg-gray-100 p-1 rounded-xl flex items-center relative w-full">
         <div
           className={`absolute h-[calc(100%-8px)] w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out ${
-            theme === 'dark' ? 'translate-x-full' : 'translate-x-0'
+            value === 'dark' ? 'translate-x-full' : 'translate-x-0'
           }`}
         />
 
         <button
-          onClick={() => setTheme('light')}
+          onClick={() => onChange('light')}
           className={`relative z-10 cursor-pointer flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold transition-colors duration-300 ${
-            theme === 'light' ? 'text-blue-primary' : 'text-gray-500'
+            value === 'light' ? 'text-blue-primary' : 'text-gray-500'
           }`}
         >
           <LightModeOutlined sx={{ fontSize: 18 }} />
@@ -31,9 +30,9 @@ export function ThemeSwitcher({ legend }: ThemeSwitcherProps) {
         </button>
 
         <button
-          onClick={() => setTheme('dark')}
+          onClick={() => onChange('dark')}
           className={`relative z-10 flex-1 cursor-pointer flex items-center justify-center gap-2 py-3 text-sm font-bold transition-colors duration-300 ${
-            theme === 'dark' ? 'text-blue-primary' : 'text-gray-500'
+            value === 'dark' ? 'text-blue-primary' : 'text-gray-500'
           }`}
         >
           <DarkModeOutlined sx={{ fontSize: 18 }} />

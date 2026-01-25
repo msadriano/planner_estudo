@@ -20,6 +20,7 @@ export function useRestartPassword() {
     register,
     watch,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<RestartPasswordFormInput>();
 
@@ -87,6 +88,7 @@ export function useRestartPassword() {
 
   return {
     register,
+    reset,
     errors,
     password,
     confirmPassword,

@@ -24,11 +24,11 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response && error.response.status === 404) {
+    if (error.response && error.response.status === 401) {
       localStorage.removeItem('@planner:token');
       localStorage.removeItem('@planner:user');
 
-      window.location.href = '/login';
+      window.location.href = '/signin';
     }
 
     return Promise.reject(error);

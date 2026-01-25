@@ -38,7 +38,7 @@ export function Input({
         )}
         {recovery && (
           <Link
-            to="/auth/passwordrecovery"
+            to="/passwordrecovery"
             className="hover:underline text-blue-primary text-xs font-semibold"
           >
             {recovery}

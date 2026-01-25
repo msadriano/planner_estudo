@@ -66,7 +66,7 @@ export function useSignUp() {
       await signUpPromise;
 
       setTimeout(() => {
-        navigate('/auth/signin');
+        navigate('/signin');
       }, 5000);
     } catch (error: any) {
       setTimeout(() => {

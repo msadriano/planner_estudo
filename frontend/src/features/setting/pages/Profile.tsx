@@ -1,21 +1,31 @@
-import { useContext, useState } from 'react';
-import { AuthContext } from '@/app/store/AuthContext';
 import { PageHeader } from '@/app/components/PageHeader';
 import { TextArea } from '@/app/components/ui/TextArea';
 import { Input } from '@/app/components/ui/Input';
+import { Modal } from '@/app/components/ui/Modal';
 import { Checkbox } from '@/app/components/ui/Checkbox';
+import { ChangePasswordForm } from '../components/ChangePasswordForm';
+import { useProfile } from '../hooks/useProfile';
+import { ThemeSwitcher } from '../components/ThemeSwitcher';
+import { BoxProfile } from '../components/BoxProfile';
 import {
-  PhotoCamera,
   BadgeOutlined,
   SettingsApplicationsOutlined,
 } from '@mui/icons-material';
-import { ThemeSwitcher } from './components/ThemeSwitcher';
 
 export function Profile() {
-  const [alertsEnabled, setAlertsEnabled] = useState(false);
-  const [weeklySummary, setWeeklySummary] = useState(true);
-
-  const { user } = useContext(AuthContext);
+  const {
+    theme,
+    setTheme,
+    handleSaveProfile,
+    alertsEnabled,
+    setAlertsEnabled,
+    weeklySummary,
+    setWeeklySummary,
+    userData,
+    handleInputChange,
+    isPasswordModalOpen,
+    setIsPasswordModalOpen,
+  } = useProfile();
 
   return (
     <main className="px-6 py-11 md:py-11 md:px-11 flex flex-col gap-8 w-full">
@@ -23,34 +33,9 @@ export function Profile() {
         title="Meu Perfil"
         subtitle="Gerencia sua informações pessoais, segurança e preferências de sua conta."
         buttonLabel="Salvar Alterações"
+        onButtonClick={handleSaveProfile}
       />
-      <div className="flex justify-center bg-white rounded-lg items-center p-6 border border-gray-100 shadow-xs flex-col gap-5 md:flex-row md:justify-start">
-        <div className="h-28 w-28 relative">
-          <div className="bg-white w-full h-full rounded-full flex items-center justify-center p-1 shadow-lg border border-gray-200">
-            <div className="w-full h-full rounded-full flex items-center justify-center overflow-hidden">
-              <img
-                src="https://github.com/shadcn.png"
-                alt="Avatar"
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </div>
-          <button className="absolute bottom-0 right-0 h-10 w-10 bg-blue-primary rounded-full border-4 border-white text-white shadow-sm cursor-pointer">
-            <PhotoCamera sx={{ fontSize: 16 }} />
-          </button>
-        </div>
-        <div className="flex flex-col items-center justify-center md:flex-1 md:items-start">
-          <h2 className="text-gray-800 text-xl font-bold">
-            {user?.name || ''}
-          </h2>
-          <p className="text-graphite text-sm font-normal">
-            Membro desde Janeiro 2024
-          </p>
-        </div>
-        <button className="text-xs font-semibold border rounded-lg p-2 border-gray-300 outline-none cursor-pointer shadow-sm hover:scale-110 hover:bg-gray-100 text-graphite">
-          Alterar Foto
-        </button>
-      </div>
+      <BoxProfile />
       <div className="flex flex-col gap-8 w-full md:flex-row">
         <div className="flex justify-center bg-white rounded-lg items-center p-6 border border-gray-100 shadow-xs flex-col gap-5 flex-1">
           <div className="w-full flex flex-row items-center justify-start gap-2.5">
@@ -59,13 +44,36 @@ export function Profile() {
               Informações Pessoais
             </p>
           </div>
-          <Input type="text" legend="Nome Completo" value={user?.name} />
-          <Input type="text" legend="E-mail" value={user?.email} />
-          <Input type="text" legend="Idade" value={user?.idade} />
-          <Input type="text" legend="Telefone" value={user?.phone} />
-          <TextArea className="h-32 overflow-y-auto resize-none">
-            {user?.bio}
-          </TextArea>
+          <Input
+            type="text"
+            legend="Nome Completo"
+            value={userData.name}
+            onChange={(e) => handleInputChange('name', e.target.value)}
+          />
+          <Input
+            type="text"
+            legend="E-mail"
+            value={userData.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
+          />
+          <Input
+            type="text"
+            legend="Idade"
+            value={userData.age}
+            onChange={(e) => handleInputChange('age', e.target.value)}
+          />
+          <Input
+            type="text"
+            legend="Telefone"
+            value={userData.phone}
+            onChange={(e) => handleInputChange('phone', e.target.value)}
+          />
+          <TextArea
+            legend="Biografia do Usuário"
+            className="h-32 overflow-y-auto resize-none"
+            value={userData.biography}
+            onChange={(e) => handleInputChange('biography', e.target.value)}
+          ></TextArea>
         </div>
         <div className="flex justify-start bg-white rounded-lg items-center p-6 border border-gray-100 shadow-xs flex-col gap-5 flex-1">
           <div className="w-full flex flex-row items-center justify-start gap-2.5">
@@ -84,14 +92,19 @@ export function Profile() {
             <div>
               <button
                 type="button"
+                onClick={() => setIsPasswordModalOpen(true)}
                 className="text-blue-primary font-bold text-xs hover:underline cursor-pointer"
               >
-                Alterar
+                Alterar Senha
               </button>
             </div>
           </div>
 
-          <ThemeSwitcher legend="Alterar Tema" />
+          <ThemeSwitcher
+            legend="Alterar Tema"
+            value={theme}
+            onChange={setTheme}
+          />
           <div className="flex flex-col items-start justify-center gap-1 w-full">
             <p className="text-sm font-semibold text-graphite">Notificações</p>
             <div className="grid grid-cols-2 gap-3 border border-gray-200 rounded-xl p-6 w-full">
@@ -123,6 +136,14 @@ export function Profile() {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={isPasswordModalOpen}
+        onClose={() => {
+          setIsPasswordModalOpen(false);
+        }}
+      >
+        <ChangePasswordForm />
+      </Modal>
     </main>
   );
 }

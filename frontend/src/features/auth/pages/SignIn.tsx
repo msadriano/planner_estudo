@@ -44,7 +44,7 @@ export function SignIn() {
           Ainda não tem conta?
         </p>
         <Link
-          to="/auth/signup"
+          to="/signup"
           className="text-xs text-blue-primary hover:underline font-semibold"
         >
           Criar nova conta

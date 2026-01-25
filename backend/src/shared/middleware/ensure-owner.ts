@@ -4,11 +4,16 @@ import { AppError } from '../utils/app-error';
 import { verifyToken } from '../utils/auth';
 
 export const ensureOwner = (model: keyof typeof prisma) => {
-  return async (request: Request, response: Response, next: NextFunction) => {
-    const [, token] = request.headers.authorization?.split(' ');
+  return async (request: Request, next: NextFunction) => {
+    const authHeader = request.headers.authorization;
+
+    if (!authHeader) {
+      throw new AppError('Token não fornecido', 401);
+    }
+
+    const [, token] = authHeader.split(' ');
 
     const decoded = verifyToken(token);
-    //const id = decoded?.type === 'recovery' ? decoded.sub : request.params.id;
 
     const id = decoded?.sub;
 

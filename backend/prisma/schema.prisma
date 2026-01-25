@@ -24,17 +24,34 @@ enum UserStatus {
   DISABLED
 }
 
+enum Theme {
+  light
+  dark
+}
+
+enum Notifications {
+  TRUE
+  FALSE
+}
+
 model User {
   id String @id @default(uuid())
   name String
   email String @unique
   age Int?
   phone String?
+  biography String?
   password String?
-  status UserStatus @default(DISABLED)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt      @map("updated_at")
-  deletedAt DateTime?                @map("deleted_at")
+  theme Theme @default(light)
+  alerts Notifications @default(FALSE)
+  summary Notifications @default(FALSE)
+  avatar_url String?
+  updatedPasswordAt DateTime?                @map("password_updated_at")
+  status UserStatus   @default(DISABLED)
+  createdAt DateTime  @default(now())        @map("created_at")
+  updatedAt DateTime  @updatedAt             @map("updated_at")
+  deletedAt DateTime?                        @map("deleted_at")
+
 
   planners Planner[] 
   tasks Task[]
