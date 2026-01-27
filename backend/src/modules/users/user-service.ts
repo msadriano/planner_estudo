@@ -11,7 +11,7 @@ import { verifyToken } from '@/shared/utils/auth';
 
 class UserService {
   static async createUser(dataUser: UserCreateSchema) {
-    const { name, email, age, phone, password } = dataUser;
+    const { name, email, age, phone, password, updatedPasswordAt } = dataUser;
 
     const userAlreadyExists = await prisma.user.findUnique({
       where: { email },
@@ -21,7 +21,13 @@ class UserService {
       throw new AppError('E-mail já cadastrado, tente novamente', 409);
     }
 
-    const dataToSave: Prisma.UserCreateInput = { name, email, age, phone };
+    const dataToSave: Prisma.UserCreateInput = {
+      name,
+      email,
+      age,
+      phone,
+      updatedPasswordAt,
+    };
 
     if (password) {
       const hash = await generateHash(password);
@@ -72,7 +78,8 @@ class UserService {
     body: UserUpdatePasswordBodySchema,
     header: string,
   ) {
-    const { password: newPassword } = body;
+    
+    const { password: newPassword, updatedPasswordAt } = body;
 
     const [, token] = header.split(' ');
 
@@ -91,10 +98,14 @@ class UserService {
     }
 
     const hashedPassword = await generateHash(newPassword);
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id },
-      data: { password: hashedPassword },
+      data: { password: hashedPassword, updatedPasswordAt },
     });
+
+    const { password: _, ...userWithoutPassword } = updatedUser;
+    console.log(userWithoutPassword);
+    return userWithoutPassword;
   }
 
   static async deleteAccount(id: string) {

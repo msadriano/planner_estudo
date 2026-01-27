@@ -17,9 +17,12 @@ export function Logo({ isCollapsed, isMenuOpen, className }: SideBarProps) {
     >
       <div className="w-full flex flex-row items-center justify-center gap-1.5">
         <div className="w-6 h-6 flex items-center justify-center rounded-md bg-blue-primary mb-1 ">
-          <MenuBook className="text-white" sx={{ fontSize: 14 }} />
+          <MenuBook
+            className="text-white transition-all"
+            sx={{ fontSize: 14 }}
+          />
         </div>
-        <span className="text-2xl font-black tracking-tight text-blue-primary">
+        <span className="text-2xl font-black tracking-tight text-blue-primary transition-all">
           Planner
         </span>
       </div>

@@ -13,11 +13,11 @@ export function PasswordRecovery() {
       onSubmit={handleSubmit(onSubmit)}
       className="w-full flex flex-col items-center justify-start gap-6 pt-1"
     >
-      <div className="flex flex-col w-full border-t-2 border-t-gray-100 pt-4">
+      <div className="flex flex-col w-full border-t-2 border-t-border-gray-100 pt-4 transition-all">
         <span className="text-lg mt-2 font-bold tracking-tighter leading-tight w-full flex items-center justify-center">
           Recuperar senha
         </span>
-        <span className="w-full text-xs text-center text-graphite px-8">
+        <span className="w-full text-xs text-center text-graphite px-8 transition-all">
           Insira seu e-mail para receber as instruções de recuperação
         </span>
       </div>
@@ -37,11 +37,11 @@ export function PasswordRecovery() {
       >
         {isLoading ? 'Enviando...' : 'Enviar instruções'}
       </Button>
-      <div className="w-full flex flex-row items-center justify-center gap-1 border-t-2 border-t-gray-100 mt-6 pt-8">
-        <p className="text-xs text-gray-500 font-semibold">Ja tem uma conta?</p>
+      <div className="w-full flex flex-row items-center justify-center gap-1 border-t-2 border-t-border-gray-100 mt-6 pt-8 transition-all">
+        <p className="text-xs text-border-gray-500 font-semibold transition-all">Ja tem uma conta?</p>
         <Link
           to="/signin"
-          className="text-xs text-blue-primary hover:underline font-semibold"
+          className="text-xs text-blue-primary hover:underline font-semibold transition-all"
         >
           Voltar para o login
         </Link>

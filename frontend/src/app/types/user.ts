@@ -2,14 +2,13 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  age?: number | string;
+  age?: number | null;
   phone?: string;
   biography?: string;
   theme: 'light' | 'dark';
   alerts: string;
   summary: string;
   updatedPasswordAt?: string;
-  avatarUrl: string;
+  avatar_url: string;
   createdAt: string;
-  avatar_url?: string;
 }

@@ -4,7 +4,7 @@ import { AppError } from '../utils/app-error';
 import { verifyToken } from '../utils/auth';
 
 export const ensureOwner = (model: keyof typeof prisma) => {
-  return async (request: Request, next: NextFunction) => {
+  return async (request: Request, response: Response, next: NextFunction) => {
     const authHeader = request.headers.authorization;
 
     if (!authHeader) {

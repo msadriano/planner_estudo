@@ -28,7 +28,6 @@ function ensureAuthenticated(
   request.user = {
     id: decoded.sub as string,
   };
-
   return next();
 }
 

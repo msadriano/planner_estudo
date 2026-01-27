@@ -20,6 +20,7 @@ export function SignIn() {
         type="email"
         {...register('email')}
         required
+        tabIndex={1}
       />
       <Input
         iconLeft={<Lock sx={{ fontSize: 16 }} />}
@@ -29,18 +30,20 @@ export function SignIn() {
         type="password"
         {...register('password')}
         required
+        tabIndex={2}
       />
       <Button
         type="submit"
         disabled={isLoading}
+        tabIndex={3}
         iconRight={
           !isLoading ? <ArrowForward sx={{ fontSize: 18 }} /> : undefined
         }
       >
         {isLoading ? 'Fazendo login...' : 'Entrar'}
       </Button>
-      <div className="w-full flex flex-row items-center justify-center gap-1 border-t-2 border-t-gray-100 mt-6 pt-8">
-        <p className="text-xs text-gray-500 font-semibold">
+      <div className="w-full flex flex-row items-center justify-center gap-1 border-t-2 border-t-border-gray-100 mt-6 pt-8 transition-all">
+        <p className="text-xs text-border-gray-500 font-semibold transition-all">
           Ainda não tem conta?
         </p>
         <Link

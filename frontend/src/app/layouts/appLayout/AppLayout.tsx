@@ -3,7 +3,7 @@ import { Aside } from './Aside/Aside';
 
 export function AppLayout() {
   return (
-    <div className="w-screen h-screen bg-background-primary flex flex-row items-center justify-start">
+    <div className="w-screen h-screen bg-background-primary flex flex-row items-center justify-start transition-all">
       <Aside />
       <div className="flex flex-col h-full flex-1 overflow-y-auto">
         <Outlet />

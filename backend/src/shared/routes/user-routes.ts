@@ -12,11 +12,7 @@ userRoutes.use(ensureAuthenticated);
 
 userRoutes.put('/:id', ensureOwner('user'), userControllers.update);
 userRoutes.patch('/me', userControllers.updateMe);
-userRoutes.patch(
-  '/password',
-  ensureOwner('user'),
-  userControllers.updatePassword,
-);
+userRoutes.patch('/password', userControllers.updatePassword);
 userRoutes.delete('/:id', ensureOwner('user'), userControllers.delete);
 userRoutes.get('/me', userControllers.show);
 

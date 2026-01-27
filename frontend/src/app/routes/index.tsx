@@ -14,7 +14,8 @@ import { SignUp } from '@/features/auth/pages/SignUp';
 import { PasswordRecovery } from '@/features/auth/pages/PasswordRecovery';
 import { RestartPassword } from '@/features/auth/pages/RestartPassword';
 import { Dashboard } from '@/features/dashboard/Dashboard';
-import { Profile } from '@/features/setting/pages/Profile';
+import { Profile } from '@/features/profile/pages/Profile';
+import { Planners } from '@/features/planners/pages/Planners';
 
 const PrivateRoute = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
         children: [
           { path: '/', element: <Dashboard /> },
           { path: 'perfil', element: <Profile /> },
+          { path: 'planners', element: <Planners /> },
         ],
       },
     ],

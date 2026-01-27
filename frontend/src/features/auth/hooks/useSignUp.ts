@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { authService } from '../services/authService';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { usePasswordValidation } from '@/app/hooks/usePasswordValidation';
 
 export interface CreateAccountFormInput {
   name: string;
   email: string;
   password: string;
+  newPassword?: string;
   confirmPassword: string;
 }
 export function useSignUp() {
-  const [isSamePassword, setIsSamePassword] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -23,25 +24,14 @@ export function useSignUp() {
     formState: { errors },
   } = useForm<CreateAccountFormInput>();
 
-  const password = watch('password') || '';
-  const confirmPassword = watch('confirmPassword') || '';
+  const passwordValue = watch('password') || '';
+  const confirmPasswordValue = watch('confirmPassword') || '';
 
-  const passwordValidations = {
-    hasMinChars: password.length >= 6,
-    hasUppercase: /[A-Z]/.test(password),
-    hasSpecialChar: /[^A-Za-z0-9]/.test(password),
-    hasNumber: /[0-9]/.test(password),
-  };
-
-  const isPasswordStrong = Object.values(passwordValidations).every(Boolean);
-
-  useEffect(() => {
-    if (confirmPassword?.length > 0) {
-      setIsSamePassword(password === confirmPassword);
-    } else {
-      setIsSamePassword(true);
-    }
-  }, [password, confirmPassword]);
+  const { passwordValidations, isSamePassword, canSubmit } =
+    usePasswordValidation({
+      passwordValue,
+      confirmPasswordValue,
+    });
 
   const handleSignUp = async (data: CreateAccountFormInput) => {
     setIsLoading(true);
@@ -67,7 +57,7 @@ export function useSignUp() {
 
       setTimeout(() => {
         navigate('/signin');
-      }, 5000);
+      }, 3000);
     } catch (error: any) {
       setTimeout(() => {
         setIsLoading(false);
@@ -75,17 +65,13 @@ export function useSignUp() {
     }
   };
 
-  const isSubmitDisabled =
-    isLoading ||
-    !isPasswordStrong ||
-    !confirmPassword ||
-    password !== confirmPassword;
+  const isSubmitDisabled = isLoading || !canSubmit;
 
   return {
     register,
     errors,
-    password,
-    confirmPassword,
+    password: passwordValue,
+    confirmPassword: confirmPasswordValue,
     isSamePassword,
     isLoading,
     isSubmitDisabled,

@@ -15,12 +15,14 @@ function ErrorHandler(
   }
 
   if (error instanceof ZodError) {
-    const errorMessages = error.flatten().fieldErrors;
-
+    // Zod v4 usa 'issues' em vez de 'errors'
     return response.status(400).json({
-      status: 'Error',
+      status: 'error',
       message: 'Dados de entrada inválidos',
-      issues: errorMessages,
+      issues: error.issues.map((issue) => ({
+        field: issue.path.join('.'),
+        message: issue.message,
+      })),
     });
   }
 

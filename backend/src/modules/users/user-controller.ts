@@ -7,10 +7,13 @@ import {
 } from './user-schema';
 import { Request, Response } from 'express';
 import { UserService } from './user-service';
+import { date, z } from 'zod';
 
 class UserController {
   async create(request: Request, response: Response) {
     const dataCreateUser = userCreateSchema.parse(request.body);
+
+    dataCreateUser.updatedPasswordAt = new Date();
 
     const createdUser = await UserService.createUser(dataCreateUser);
 
@@ -20,19 +23,17 @@ class UserController {
   async update(request: Request, response: Response) {
     const dataUpdateUser = userUpdateSchema.parse(request.body);
     const { id } = userIdSchema.parse(request.params);
-
     const updatedUser = await UserService.updateUser(dataUpdateUser, id);
-
     return response.status(200).json(updatedUser);
   }
 
   async updatePassword(request: Request, response: Response) {
     const body = userUpdatePasswordBodySchema.parse(request.body);
+    body.updatedPasswordAt = new Date();
     const header = request.headers.authorization as string;
 
-    await UserService.updateUserPassword(body, header);
-
-    return response.status(204).send();
+    const updatedUser = await UserService.updateUserPassword(body, header);
+    return response.status(204).json(updatedUser);
   }
 
   async delete(request: Request, response: Response) {
@@ -47,8 +48,6 @@ class UserController {
     const userId = request.user.id;
 
     const user = await UserService.showUser(userId);
-
-    console.log(user);
 
     return response.status(200).json(user);
   }

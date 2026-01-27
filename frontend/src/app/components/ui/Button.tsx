@@ -26,7 +26,7 @@ export function Button({
         className={cn(
           'rounded-xl px-6 py-2.5 shadow-lg transition-all shadow-blue-primary/20 w-full flex items-center justify-center gap-3',
           'text-white font-semibold text-base',
-          'bg-blue-primary hover:bg-blue-500 cursor-pointer',
+          'bg-blue-primary hover:bg-blue-600 cursor-pointer',
           'disabled:hover:bg-blue-primary disabled:pointer-events-none disabled:opacity-70 disabled:cursor-not-allowed',
           className,
         )}

@@ -53,11 +53,7 @@ export const uploadAvatarMiddleware = (
 ) => {
   const multerMiddleware = upload.single('avatar');
 
-  console.log('entrei no mw1');
-
   multerMiddleware(req, res, (err) => {
-    console.log('entrei no mw2');
-
     if (err) {
       console.log('erro no multer:', err.message);
       return next(
@@ -69,8 +65,6 @@ export const uploadAvatarMiddleware = (
       console.log('arquivo não encontrado');
       return next(new AppError('Nenhum arquivo foi enviado', 400));
     }
-
-    console.log('saindo do mw');
     next();
   });
 };

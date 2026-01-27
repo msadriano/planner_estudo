@@ -13,8 +13,8 @@ export function ValidationBox({ validations }: ValidationBoxProps) {
   const { hasMinChars, hasUppercase, hasNumber, hasSpecialChar } = validations;
 
   return (
-    <div className="p-3 bg-background-secondary border border-gray-200 rounded-xl w-full flex flex-col gap-2 items-center justify-center">
-      <span className="text-[10px] font-bold uppercase text-gray-500 tracking-widest w-full flex justify-start items-center">
+    <div className="p-3 bg-background-secondary border border-border-gray-200 rounded-xl w-full flex flex-col gap-2 items-center justify-center transition-all">
+      <span className="text-[10px] font-bold uppercase text-border-gray-500 tracking-widest w-full flex justify-start items-center transition-all">
         Validação de senha
       </span>
       <div className="grid grid-cols-2 w-full">

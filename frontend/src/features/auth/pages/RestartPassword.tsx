@@ -23,7 +23,7 @@ export function RestartPassword() {
       onSubmit={handleSubmit(onSubmit)}
       className="w-full flex flex-col items-center justify-start gap-6 pt-1"
     >
-      <div className="flex flex-col w-full border-t-2 border-t-gray-100 pt-4">
+      <div className="flex flex-col w-full border-t-2 border-t-border-gray-100 pt-4 transition-all">
         <span className="text-lg mt-2 font-bold tracking-tighter leading-tight w-full flex items-center justify-center">
           Criar nova senha
         </span>
@@ -39,6 +39,7 @@ export function RestartPassword() {
         type="password"
         {...register('password')}
         required
+        tabIndex={1}
       />
       <Input
         iconLeft={<Shield sx={{ fontSize: 16 }} />}
@@ -53,14 +54,15 @@ export function RestartPassword() {
               : 'focus-within:text-red-400 focus-within:border-red-400'),
         )}
         required
+        tabIndex={2}
       />
 
       <ValidationBox validations={passwordValidations} />
 
-      <Button type="submit" disabled={isSubmitDisabled}>
+      <Button type="submit" disabled={isSubmitDisabled} tabIndex={3}>
         {isLoading ? 'Redefinindo senha...' : 'Redefinir senha'}
       </Button>
-      <div className="w-full flex flex-row items-center justify-center gap-2 border-t-2 border-t-gray-100 mt-6 pt-8">
+      <div className="w-full flex flex-row items-center justify-center gap-2 border-t-2 border-t-border-gray-100 mt-6 pt-8 transition-all">
         <Link
           to="/signin"
           className="text-xs text-blue-primary hover:underline font-semibold"

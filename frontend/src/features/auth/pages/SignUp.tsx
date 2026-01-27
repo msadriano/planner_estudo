@@ -23,11 +23,11 @@ export function SignUp() {
       onSubmit={handleSubmit(onSubmit)}
       className="w-full flex flex-col items-center justify-start gap-6 pt-1"
     >
-      <div className="flex flex-col w-full border-t-2 border-t-gray-100 pt-4">
+      <div className="flex flex-col w-full border-t-2 border-t-border-gray-100 pt-4 transition-all">
         <span className="text-lg mt-2 font-bold tracking-tighter leading-tight w-full flex items-center justify-center">
           Criar nova conta
         </span>
-        <span className="w-full text-xs text-center text-graphite px-8">
+        <span className="w-full text-xs text-center text-graphite px-8 transition-all">
           Junte-se a comunidade de estudantes que organizou definitivamente sua
           rotina de estudos
         </span>
@@ -39,6 +39,7 @@ export function SignUp() {
         type="text"
         {...register('name')}
         required
+        tabIndex={1}
       />
       <Input
         iconLeft={<Mail sx={{ fontSize: 16 }} />}
@@ -47,6 +48,7 @@ export function SignUp() {
         type="email"
         {...register('email')}
         required
+        tabIndex={2}
       />
       <div className="w-full flex flex-row justify-center items-center gap-4">
         <Input
@@ -56,6 +58,7 @@ export function SignUp() {
           type="password"
           {...register('password')}
           required
+          tabIndex={3}
         />
         <Input
           iconLeft={<Shield sx={{ fontSize: 16 }} />}
@@ -70,6 +73,7 @@ export function SignUp() {
                 : 'focus-within:text-red-400 focus-within:border-red-400'),
           )}
           required
+          tabIndex={4}
         />
       </div>
       <ValidationBox validations={passwordValidations} />
@@ -78,11 +82,14 @@ export function SignUp() {
         type="submit"
         iconRight={<PersonAdd sx={{ fontSize: 18 }} />}
         disabled={isSubmitDisabled}
+        tabIndex={5}
       >
         {isLoading ? 'Cadastrando...' : 'Criar conta grátis'}
       </Button>
-      <div className="w-full flex flex-row items-center justify-center gap-1 border-t-2 border-t-gray-100 mt-6 pt-8">
-        <p className="text-xs text-gray-500 font-semibold">Ja tem uma conta?</p>
+      <div className="w-full flex flex-row items-center justify-center gap-1 border-t-2 border-t-border-gray-100 mt-6 pt-8 transition-all">
+        <p className="text-xs text-border-gray-500 font-semibold transition-all">
+          Ja tem uma conta?
+        </p>
         <Link
           to="/signin"
           className="text-xs text-blue-primary hover:underline font-semibold"

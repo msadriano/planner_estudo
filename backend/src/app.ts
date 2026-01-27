@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { routes } from './shared/routes';
 import { ErrorHandler } from './shared/middleware/error-handler';
-import path from 'path'; // Adicione esta linha
+import path from 'path';
 
 const app = express();
 

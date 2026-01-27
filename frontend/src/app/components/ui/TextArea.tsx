@@ -5,10 +5,13 @@ import type {
 } from 'react';
 import { cn } from '@/app/utils/cn';
 
-interface InputProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface InputProps extends Omit<
+  TextareaHTMLAttributes<HTMLTextAreaElement>,
+  'value'
+> {
   legend?: string;
   children?: ReactNode;
-  value?: string;
+  value?: string | null;
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
 }
 
@@ -24,17 +27,17 @@ export function TextArea({
     <fieldset className="flex flex-col items-start justify-center gap-1 w-full">
       <div className="flex flex-row w-full items-center justify-between">
         {legend && (
-          <label className={`text-gray-800 font-semibold text-sm`}>
+          <label className={`text-border-gray-700 font-semibold text-sm transition-all`}>
             {legend}
           </label>
         )}
       </div>
       <div className="relative w-full group">
         <textarea
-          value={value}
+          value={value ?? ''}
           onChange={onChange}
           className={cn(
-            'w-full bg-transparent border-2  outline-none rounded-xl border-gray-200 text-graphite font-semibold placeholder:text-gray-300 placeholder:font-normal text-xs py-3 px-4 transition-all focus-within:border-blue-primary',
+            'w-full bg-transparent border-2  outline-none rounded-xl border-border-gray-200 text-graphite font-semibold placeholder:text-gray-300 placeholder:font-normal text-xs py-3 px-4 transition-all focus-within:border-blue-primary',
             className,
           )}
           {...props}

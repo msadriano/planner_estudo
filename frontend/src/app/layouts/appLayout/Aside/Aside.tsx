@@ -33,7 +33,7 @@ export function Aside() {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 md:relative md:inset-auto md:z-0 flex flex-col border-r bg-white shadow transition-all duration-300 border-gray-100 ${
+        className={`fixed inset-y-0 left-0 z-50 md:relative md:inset-auto md:z-0 flex flex-col border-r bg-white-full shadow transition-all duration-300 border-border-gray-100 ${
           isMenuOpen
             ? 'w-64 translate-x-0'
             : isCollapsed
@@ -47,15 +47,15 @@ export function Aside() {
               ? setIsMenuOpen(!isMenuOpen)
               : setIsCollapsed(!isCollapsed)
           }
-          className={`absolute top-2 z-50 h-8 w-8 rounded-full border border-gray-200 bg-white flex items-center justify-center cursor-pointer shadow-md outline-none hover:bg-gray-100 hover:scale-110 transition-all duration-300 ${
+          className={`absolute top-2 z-50 h-8 w-8 rounded-full border border-border-gray-200 bg-white-full flex items-center justify-center cursor-pointer shadow-md outline-none hover:bg-gray-100 hover:scale-110 transition-all duration-300 ${
             !isMenuOpen ? '-right-10 md:-right-4' : '-right-4'
           }`}
         >
           {(window.innerWidth < 768 && !isMenuOpen) || isCollapsed ? (
-            <Menu className="text-gray-400" sx={{ fontSize: 20 }} />
+            <Menu className="text-border-gray-400" sx={{ fontSize: 20 }} />
           ) : (
             <KeyboardDoubleArrowLeft
-              className="text-gray-400"
+              className="text-border-gray-400"
               sx={{ fontSize: 20 }}
             />
           )}

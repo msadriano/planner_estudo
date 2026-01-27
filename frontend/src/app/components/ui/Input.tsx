@@ -32,14 +32,16 @@ export function Input({
     <fieldset className="flex flex-col items-start justify-center gap-1 w-full">
       <div className="flex flex-row w-full items-center justify-between">
         {legend && (
-          <label className={`text-gray-800 font-semibold text-sm`}>
+          <label
+            className={`text-border-gray-700 font-semibold text-sm transition-all`}
+          >
             {legend}
           </label>
         )}
         {recovery && (
           <Link
             to="/passwordrecovery"
-            className="hover:underline text-blue-primary text-xs font-semibold"
+            className="hover:underline text-blue-primary text-xs font-semibold transition-all"
           >
             {recovery}
           </Link>
@@ -47,7 +49,7 @@ export function Input({
       </div>
       <div className="relative w-full group">
         {iconLeft && (
-          <span className="text-gray-300 pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 flex items-center group-focus-within:text-blue-primary">
+          <span className="text-gray-300 pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 flex items-center transition-all group-focus-within:text-blue-primary">
             {iconLeft}
           </span>
         )}
@@ -55,7 +57,7 @@ export function Input({
           {...props}
           type={inputType}
           className={cn(
-            'w-full bg-transparent border-2  outline-none rounded-xl border-gray-200 text-graphite font-semibold placeholder:text-gray-300 placeholder:font-normal text-xs py-3 transition-all focus-within:border-blue-primary',
+            'w-full bg-transparent border-2  outline-none rounded-xl border-border-gray-200 text-graphite font-semibold placeholder:text-gray-300 placeholder:font-normal text-xs py-3 transition-all focus-within:border-blue-primary',
             iconLeft ? 'pl-10' : 'pl-4',
             iconRight || type === 'password' ? 'pr-10' : 'pr-4',
             className,
@@ -67,7 +69,7 @@ export function Input({
             <button
               type="button"
               onClick={togglePasswordVisibility}
-              className="text-gray-300 hover:text-gray-500 transition-colors flex items-center justify-center cursor-pointer"
+              className="text-gray-300 hover:text-gray-500 flex items-center justify-center cursor-pointer transition-all"
             >
               {showPassword ? (
                 <VisibilityOff sx={{ fontSize: 16 }} />
@@ -77,7 +79,7 @@ export function Input({
             </button>
           ) : (
             iconRight && (
-              <span className="text-gray-300 pointer-events-none">
+              <span className="text-gray-300 pointer-events-none transition-all">
                 {iconRight}
               </span>
             )

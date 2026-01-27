@@ -16,7 +16,7 @@ class AuthService {
 
     const token = generateToken(hasEmail.id, '1d', 'recovery');
 
-    const recoveryLink = `${env.BASEURL}/auth/restartpassword/${token}`;
+    const recoveryLink = `${env.BASEURL}/restartpassword/${token}`;
 
     console.log(recoveryLink);
 
